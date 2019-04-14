@@ -1,5 +1,7 @@
 package question2;
 
+
+
 import question1.PilePleineException;
 import question1.PileVideException;
 
@@ -8,24 +10,24 @@ import java.util.Stack;
 public class Pile4 implements PileI, Cloneable {
 	/** la liste des Maillons/Elements */
 	private Maillon stk;
-	/** la capacité de la pile */
+	/** la capacit� de la pile */
 	private int capacite;
 	/** le nombre */
 	private int nombre;
 
 	/**
-	 * Classe interne "statique" contenant chaque élément de la chaine c'est une
+	 * Classe interne "statique" contenant chaque �l�ment de la chaine c'est une
 	 * proposition, vous pouvez l'ignorer !
 	 */
 	private static class Maillon implements Cloneable {
 		private Object element;
 		private Maillon suivant;
-
+              
 		public Maillon(Object element, Maillon suivant) {
 			this.element = element;
 			this.suivant = suivant;
+			
 		}
-
 		public Maillon suivant() {
 			return this.suivant;
 		}
@@ -41,12 +43,6 @@ public class Pile4 implements PileI, Cloneable {
 		}
 	}
 
-	/**
-	 * Création d'une pile.
-	 * 
-	 * @param taille
-	 *            la taille de la pile, la taille doit être > 0
-	 */
 	public Pile4(int taille) {
 		if (taille <= 0)
 			taille = CAPACITE_PAR_DEFAUT;
@@ -59,62 +55,76 @@ public class Pile4 implements PileI, Cloneable {
 	}
 
 	public void empiler(Object o) throws PilePleineException {
-		if (estPleine())
-			throw new PilePleineException();
-		// à compléter
+		if (estPleine()){
+			throw new PilePleineException();}
+			Maillon first=new Maillon(o,stk);
+			stk=first;
+			nombre++;
+		
 	}
 
 	public Object depiler() throws PileVideException {
 		if (estVide())
 			throw new PileVideException();
-		// à compléter
-		return null;
+			
+		Object o = stk.element();
+	         stk = stk.suivant();
+		nombre--;
+		return o;
 	}
 
 	public Object sommet() throws PileVideException {
-		if (estVide())
-			throw new PileVideException();
-		return null; // à compléter
-	}
-
-	/**
-	 * Effectue un test de l'état de la pile.
-	 * 
-	 * @return vrai si la pile est vide, faux autrement
-	 */
+		if (estVide()){
+			throw new PileVideException();}
+		return stk.element(); 
+}
 	public boolean estVide() {
-		return false; // à compléter
+		return stk==null;
 	}
 
-	/**
-	 * Effectue un test de l'état de la pile.
-	 * 
-	 * @return vrai si la pile est pleine, faux autrement
-	 */
+	
 	public boolean estPleine() {
-		return false; // à compléter
+		return nombre==capacite; 
 	}
 
-	/**
-	 * Retourne une représentation en String d'une pile, contenant la
-	 * représentation en String de chaque élément.
-	 * 
-	 * @return une représentation en String d'une pile
-	 */
+	
 	public String toString() {
+         Maillon initial = stk;
+        String s = "[";
+        while (stk != null){
+            s += (stk.element()==null)? "null":stk.element().toString();
+            stk = stk.suivant();
+            if(stk!=null) s+=", ";    
+        }
+        stk = initial;
+        return s + "]";
+    }
+    
 
-		String s = "[";
-		// à compléter
-		return s + "]";
-	}
+    
+	 
 
 	public boolean equals(Object o) {
+	    boolean equals=false;
 		if (o instanceof Pile4) {
-			// à compléter
-			return false;
-		}
-		return false;
-	}
+			Pile4 pile = (Pile4)o;
+			equals = capacite() == pile.capacite() && taille() == pile.taille();
+			if (equals) {
+                Maillon thisStk = stk, targetStk = pile.stk;
+		while (thisStk != null && targetStk != null) {	
+		    Object a = thisStk.element(), b = targetStk.element();
+		    if (a != null) {
+                 } else {
+                        equals = false;
+                    }
+                    if (!equals) {
+                       break;
+                       
+                    }
+
+		}}
+		return equals;
+}
 
 	public int capacite() {
 		return this.capacite;
@@ -126,5 +136,4 @@ public class Pile4 implements PileI, Cloneable {
 
 	public int taille() {
 		return nombre;
-	}
-}
+	}}
